@@ -1,10 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Container, LoadingIcon} from './styles';
 import AsyncStorage from '@react-native-community/async-storage';
 import BarberLogo from '../../assets/barber.svg';
 import {useNavigation} from '@react-navigation/native';
 
+import {UserContext} from '../../contexts/UserContext';
+import Api from '../../Api';
+
 export default () => {
+  const {dispatch: userDispatch} = useContext(UserContext);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -12,6 +16,23 @@ export default () => {
       const token = await AsyncStorage.getItem('token');
       if (token) {
         //Validar token
+        let json = await Api.checkToken(token);
+        if (json.token) {
+          await AsyncStorage.setItem('token', json.token);
+
+          userDispatch({
+            type: 'setAvatar',
+            payload: {
+              avatar: json.data.avatar,
+            },
+          });
+
+          navigation.reset({
+            routes: [{name: 'MainTab'}],
+          });
+        } else {
+          navigation.navigate('SignIn');
+        }
       } else {
         //Mandar pro login
         navigation.navigate('SignIn');
