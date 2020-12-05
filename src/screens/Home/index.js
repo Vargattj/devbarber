@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {request, PERMISSIONS} from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
@@ -49,7 +49,8 @@ export default () => {
       });
     }
   };
-  const getBarbers = async () => {
+
+  const getBarbers = useCallback(async () => {
     setLoading(true);
     setList([]);
 
@@ -69,11 +70,11 @@ export default () => {
       // alert('Erro: ' + res.error);
     }
     setLoading(false);
-  };
+  }, [coords, locationText]);
 
   useEffect(() => {
     getBarbers();
-  }, []);
+  }, [getBarbers]);
 
   const onRefresh = () => {
     setRefreshing(false);
