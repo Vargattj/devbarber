@@ -6,6 +6,8 @@ import Api from '../../Api';
 import Stars from '../../components/Stars';
 import FavoriteIcon from '../../assets/favorite.svg';
 import BackIcon from '../../assets/back.svg';
+import NavPrevIcon from '../../assets/nav_prev.svg';
+import NavNextIcon from '../../assets/nav_next.svg';
 
 import {
   Container,
@@ -32,6 +34,10 @@ import {
   ServiceChooseButton,
   ServiceChooseButtonText,
   TestimonialArea,
+  TestimonialItem,
+  TestimonialInfo,
+  TestimonialName,
+  TestimonialBody,
 } from './styles';
 
 export default () => {
@@ -111,8 +117,26 @@ export default () => {
                 </ServiceItem>
               ))}
           </ServiceArea>
-
-          <TestimonialArea></TestimonialArea>
+          {userInfo.testimonials && userInfo.testimonials.length > 0 && (
+            <TestimonialArea>
+              <Swiper
+                style={{height: 110}}
+                showsPagination={false}
+                showsButtons={true}
+                prevButton={<NavPrevIcon width="35" height="35" fill="#000" />}
+                nextButton={<NavNextIcon width="35" height="35" fill="#000" />}>
+                {userInfo.testimonials.map((item, key) => (
+                  <TestimonialItem key={key}>
+                    <TestimonialInfo>
+                      <TestimonialName>{item.name}</TestimonialName>
+                      <Stars stars={item.rate} showNumber={false} />
+                    </TestimonialInfo>
+                    <TestimonialBody>{item.body}</TestimonialBody>
+                  </TestimonialItem>
+                ))}
+              </Swiper>
+            </TestimonialArea>
+          )}
         </PageBody>
       </Scroller>
       <BackButton onPress={handleBackButton}>

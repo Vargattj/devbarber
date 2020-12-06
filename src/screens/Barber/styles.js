@@ -128,7 +128,32 @@ export const ServiceChooseButtonText = styled.Text`
   color: #fff;
 `;
 
-export const TestimonialArea = styled.View``;
+export const TestimonialArea = styled.View`
+  margin-top: 30px;
+  margin-bottom: 50px;
+`;
+export const TestimonialItem = styled.View`
+  background-color: #268596;
+  padding: 15px;
+  border-radius: 10px;
+  height: 110px;
+  justify-content: center;
+  margin: 0 50px;
+`;
+export const TestimonialInfo = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 5px;
+`;
+export const TestimonialName = styled.Text`
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+`;
+export const TestimonialBody = styled.Text`
+  color: #fff;
+  font-size: 13px;
+`;
 
 export const BackButton = styled.TouchableOpacity`
   position: absolute;
